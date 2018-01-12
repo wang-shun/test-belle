@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:ldap="http://www.springframework.org/schema/ldap"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+            http://www.springframework.org/schema/ldap 
+       		http://www.springframework.org/schema/ldap/spring-ldap.xsd
+       		http://www.springframework.org/schema/tx 
+	   		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+	<!-- 加载base工程配置
+	<import resource="classpath:META-INF/spring-base-web.xml"/>
+	 -->
+	 
+	<!-- 加载依赖manager层配置 -->
+	<import resource="classpath*:META-INF/spring-bs-sso-manager.xml" />
+	
+	<!-- 连接池、事务配置 -->
+    <ldap:context-source
+       id = "context"
+       url="${sample.ldap.url}"
+       base="${sample.ldap.base}"
+       username="${sample.ldap.userDn}"
+       password="${sample.ldap.password}" >
+    </ldap:context-source>
+    
+    <ldap:context-source
+       id = "contextPool"
+       url="${sample.ldap.url}"
+       base="${sample.ldap.base}"
+       username="${sample.ldap.userDn}"
+       password="${sample.ldap.password}" >
+       <ldap:pooling
+            test-on-borrow="true"
+            test-while-idle="true" />
+    </ldap:context-source>
+    
+	<ldap:ldap-template id="ldapTemplate" context-source-ref="context"/>
+	
+	<ldap:ldap-template id="ldapTemplatePool" context-source-ref="contextPool"  />
+		
+	<!-- <ldap:repositories base-package="com.wonhigh.bs.sso.common.model" /> -->
+ 	<ldap:transaction-manager context-source-ref="context" id="transactionManagerForLdap">
+	    <ldap:default-renaming-strategy />
+	</ldap:transaction-manager>
+
+	
+	<tx:annotation-driven transaction-manager="transactionManagerForLdap"/>
+	
+	<context:component-scan base-package="com.wonhigh.bs.sso" /> 
+	
+	<!-- *************************redis****************************** -->
+  	<!-- jedis 配置 -->  
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig" >  
+          <property name="maxIdle" value="${redis.conf.maxIdle}" />  
+          <property name="maxWaitMillis" value="${redis.conf.maxWait}" />  
+          <property name="testOnBorrow" value="${redis.conf.testOnBorrow}" />  
+    </bean >  
+  	<!-- redis服务器中心 -->  
+    <bean id="connectionFactory"  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >  
+          <property name="poolConfig" ref="poolConfig" />  
+          <property name="port" value="${redis.port}" />  
+          <property name="hostName" value="${redis.host}" />  
+          <property name="password" value="${redis.pass}" />  
+          <property name="timeout" value="${redis.conf.timeout}" ></property>  
+    </bean >  
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >  
+          <property name="connectionFactory" ref="connectionFactory" />  
+          <property name="keySerializer" >  
+              <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+          </property>  
+          <property name="valueSerializer" >  
+              <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+          </property>  
+    </bean >  
+      
+    <bean id="redisUtil" class="com.wonhigh.bs.sso.server.common.util.RedisUtil" >  
+          <property name="redisTemplate" ref="redisTemplate" />  
+    </bean >  
+    
+  
+
+	<!-- *************************redis end ****************************** -->
+	
+	<!-- *************************cas filter config****************************** -->
+	<bean id="ignoreUrlPatternMatcherStrategyClass" class="org.jasig.cas.client.authentication.RegexUrlPatternMatcherStrategy">
+    	<property name="pattern" value="${cas.server.ignorePattern}" />
+    </bean>
+	
+	<!-- 该过滤器负责用户的认证工作 -->
+	<bean name="authenticationFilter"  
+        class="org.jasig.cas.client.authentication.CustomAuthenticationFilter">  
+        <property name="casServerLoginUrl" value="${cas.server.loginUrl}" />  
+        <property name="renew" value="${cas.server.renew}" />  
+        <property name="gateway" value="${cas.server.gateway}" />
+        <property name="serverName" value="${cas.client.serverName}" />  
+        <property name="ignoreUrlPatternMatcherStrategyClass" ref="ignoreUrlPatternMatcherStrategyClass"></property>
+    </bean>  
+  
+    <!-- 对认证ticket进行校验 -->  
+    <bean name="ticketValidationFilter"  
+        class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter">  
+        <property name="serverName" value="${cas.client.serverName}" />  
+          
+        <property name="ticketValidator">
+            <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">  
+                <constructor-arg index="0" value="${cas.server.urlPrefix}" />  
+                <property name="encoding" value="${cas.client.encoding}" />
+            </bean>  
+        </property>  
+        <!-- 新增属性，配置强制修改密码的Url      ***fix me 使用自定义包再放开该注释 -->
+        <property name="forceEditPwdUrl" value="${cas.server.forceEditPwdUrl}" /> 
+        <property name="deviceCheck" value="${cas.client.deviceCheck}"></property>
+		<property name="casServerLogoutUrl" value="${cas.server.logoutUrl}" /> 
+		<property name="bizCode" value="${cas.client.bizCode}" /> 
+		<property name="ssoServerIndexUrl" value="${sso.server.homeUrl}" /> 
+    </bean>  
+    <!-- *************************cas filter  end****************************** -->
+	
+	
+	
+</beans>

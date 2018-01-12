@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 加载依赖service层配置 -->
+	<import resource="classpath*:META-INF/spring-bs-sso-service.xml" />
+	
+	<!-- mq生产 -->
+	<!-- <import resource="classpath:META-INF/spring-sso-admin-server-mq.xml" /> -->
+	<!-- mq消费 -->
+	<import resource="classpath:META-INF/spring-sso-admin-client-mq.xml" />
+	
+	<!-- 扫描本工程bean-->
+	<context:component-scan base-package="com.wonhigh.bs.sso.manager">
+	</context:component-scan>
+	
+    <!-- 调度线程池数 -->
+    <!-- <task:scheduler id="scheduler" pool-size="5" />  
+    <task:annotation-driven  scheduler="scheduler" /> -->  
+    
+    <!-- 定时执行同步hr用户信息 -->
+    <!-- <task:scheduled-tasks scheduler="scheduler">
+    	<task:scheduled ref="syncSsoUserTask" method="syncSsoUserFromHr" cron="0 0 0 * * ?"/>
+    </task:scheduled-tasks> -->
+    
+</beans>

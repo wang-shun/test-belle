@@ -1,0 +1,18 @@
+# -----redis------
+redis.master.host=172.17.205.180
+redis.master.port=6379
+redis.master.pass=
+redis.master.timeout=60000
+redis.master.dbIndex=0
+
+redis.slave.host=172.17.205.180
+redis.slave.port=6379
+redis.slave.pass=
+redis.slave.timeout=60000
+redis.slave.dbIndex=0
+
+redis.conf.maxActive=5000
+redis.conf.maxIdle=100
+redis.conf.maxWait=10000
+redis.conf.testOnBorrow=false
+redis.conf.timeout=10000

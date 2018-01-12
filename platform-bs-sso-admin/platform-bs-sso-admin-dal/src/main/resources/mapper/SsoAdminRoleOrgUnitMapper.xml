@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.wonhigh.bs.admin.sso.dal.database.SsoAdminRoleOrgUnitMapper">
+	<resultMap id="BaseResultMap"
+		type="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleOrgUnitDTO">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="org_unit_id" property="orgUnitId" jdbcType="INTEGER" />
+		<result column="unit_code" property="unitCode" jdbcType="VARCHAR" />
+		<result column="sso_admin_role_id" property="ssoAdminRoleId"
+			jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,org_unit_id,unit_code,sso_admin_role_id,create_time,create_user,update_time,update_user
+	</sql>
+
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="null!=params.queryCondition and ''!=params.queryCondition">
+				${params.queryCondition}
+			</if>
+			<if test="null!=params.orgUnitId and ''!=params.orgUnitId">
+				and org_unit_id = #{params.orgUnitId,jdbcType=INTEGER}
+			</if>
+			<if test="null!=params.ssoAdminRoleId and ''!=params.ssoAdminRoleId">
+				and sso_admin_role_id = #{params.ssoAdminRoleId,jdbcType=INTEGER}
+			</if>
+		</if>
+	</sql>
+
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) as s FROM sso_admin_role_org_unit WHERE 1=1
+		<include refid="condition" />
+	</select>
+
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sso_admin_role_org_unit WHERE 1=1
+		<include refid="condition" />
+		<if test="orderByField != null and ''!=orderByField" >
+	      ORDER BY ${orderByField}
+	      <if test="orderBy != null and ''!=orderBy" >
+	        ${orderBy}
+	      </if>
+	    </if>
+		LIMIT #{page.startRowNum} ,#{page.pageSize}
+	</select>
+
+	<insert id="insertSelective"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleOrgUnitDTO">
+		INSERT INTO sso_admin_role_org_unit(
+		org_unit_id,
+		<if test="null!=unitCode and ''!=unitCode">
+			unit_code,
+		</if>
+		sso_admin_role_id,
+		<if test="null!=createUser and ''!=createUser">
+			create_user,
+		</if>
+		create_time,update_time
+		)VALUES(
+		<trim>
+			#{orgUnitId,jdbcType=INTEGER},
+			<if test="null!=unitCode and ''!=unitCode">
+				#{unitCode,jdbcType=VARCHAR},
+			</if>
+			#{ssoAdminRoleId,jdbcType=INTEGER},
+			<if test="null!=createUser and ''!=createUser">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			now(),now())
+		</trim>
+	</insert>
+
+	<insert id="insert"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleOrgUnitDTO">
+		INSERT INTO sso_admin_role_org_unit (
+		org_unit_id,unit_code,sso_admin_role_id,create_time,create_user,update_time
+		)
+		VALUES (#{orgUnitId,jdbcType=INTEGER}, #{unitCode,jdbcType=VARCHAR},
+		#{ssoAdminRoleId,jdbcType=INTEGER},
+		now(),
+		#{createUser,jdbcType=VARCHAR},
+		now())
+	</insert>
+
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleOrgUnitDTO">
+		delete
+		from sso_admin_role_org_unit where id=#{id}
+	</delete>
+
+	<delete id="deleteByRoleId" parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleOrgUnitDTO">
+		delete
+		from sso_admin_role_org_unit where sso_admin_role_id=#{ssoAdminRoleId}
+	</delete>
+
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT 
+		    t1.id,
+			t1.org_unit_id,
+			t1.sso_admin_role_id,
+			t1.create_time,
+			t1.create_user,
+			t1.update_time,
+			t1.update_user,
+			t2.unit_code
+	    FROM sso_admin_role_org_unit t1 left join org_unit t2 on t1.org_unit_id = t2.unit_id 
+	    <include refid="condition" />
+    </select>
+
+</mapper>

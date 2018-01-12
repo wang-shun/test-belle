@@ -1,0 +1,236 @@
+@import "../common/common.less";
+
+// 头部
+header {
+  height: @headerHeight;
+  background: @headerColor;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #cdcdcd;
+  .navbar {
+    padding: @mainpd;
+    display: flex; 
+    width: 100%;
+  }
+  .log {
+    display: flex; 
+    flex-direction: column;
+    padding-left: 8px;
+    color: #fff;
+  }
+  p {
+    padding: 0;
+  }
+  .navbar-brand {
+    padding: 0;
+    margin: 0; 
+  }
+
+  .cnName { 
+    font-size: 18px;
+    font-weight: 600;
+  }   
+  .enName {
+    font-size: 16px;
+    font-weight: 400;
+    word-spacing: 3px;
+  }
+
+  .nav-list {
+    padding-right: 42px;
+    font-size: 12px;
+    color: #fff;
+    list-style: none;
+    .nav-list-item {
+      float: left;
+      margin-left: 20px;     
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .iconfont {
+      margin-right: 5px;
+    }
+  }
+}
+
+// 主体
+main {
+  .iconfont {
+    font-size: 30px;
+  }
+  .bingding { 
+    .iconfont {
+      font-size: 22px;
+      color: #dcdcdc;    
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+  }
+  .menu-list {
+    width: 100%;
+    padding: @mainpd;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .menu-item {
+    @border-color: #f5f5f5;
+    .user-select-none;
+    width: 20%;
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    position: relative;
+    margin-left: 0;
+    color: #494c6b;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+    background: #fff;
+    border-right: 4px solid @border-color;
+    border-bottom: 4px solid @border-color;
+    &:nth-child(5n) {
+      border-right: 0;
+    }
+
+    &:hover {
+      cursor: default;
+      background: #fafafa;
+      color: #427fd8;
+      cursor: pointer;
+    }
+    .d-flex {
+      flex-direction: column;
+      align-items: center;
+    }
+    .fa {
+      margin-bottom: 10px;
+    }
+  }
+  .d-online{
+    position: absolute;
+    top: 50%;
+    margin-top: 40px;
+    display: none;
+  }
+  .no-hover{ 
+    &:hover{
+      .d-online{
+        display: block
+      }
+      color: #494c6b;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// 绑定业务系统
+.linkService {
+  display: none;
+  @boderColor: #f1f1f1;
+  .link-pannel {
+    justify-content: space-between;
+  }
+  .select-form {
+    width: 168px;
+  }
+  .btn-link {
+    width: 310px;
+    height: 47px;
+    margin: auto;
+    display: block;
+    background: @modaiColor;
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  .form-group {
+    margin-bottom: 30px;
+  }
+  .aBillFrom {
+    width: 544px;
+    margin-bottom: 50px;
+  }
+  .account-title {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  .modal-dialog {
+    max-width: 676px;
+  }
+  .modal-body {
+    width: auto;
+    padding-bottom: 60px;
+  }
+  .account-list {
+    border: 1px solid @boderColor;
+  }
+  table {
+    width: 100%;
+  }
+  th {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  td {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    &:nth-last-child(1) {
+      color: @modaiColor;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  tr {
+    height: 32px;
+    border-top: 1px solid @boderColor;
+  }
+  .Pagination {
+    @PaginationH: 26px;
+    height: @PaginationH;
+    float: right;
+    margin-top: 5px;
+    border: 1px solid @boderColor;
+    .icon {
+      font-size: 12px;
+    }
+    li {
+      float: left;
+      box-sizing: border-box;
+      width: 26px;
+      height: 100%;
+      border-left: 1px solid @boderColor;
+      text-align: center;
+      line-height: @PaginationH;
+      font-size: 12px;
+      &.active {
+        background: #979797;
+        color: #fff;
+        &:hover {
+          background: #979797;
+        }
+      }
+      &:hover {
+        cursor: pointer;
+        background: #f0f0f0;
+      }
+    }
+  }
+}
+.changePsd {
+  .modal-content{
+    width: 482px;
+    height: 524px;
+  }
+}

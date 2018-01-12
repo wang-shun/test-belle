@@ -1,0 +1,23 @@
+.datagrid-empty-msg {
+	display: none;
+}
+
+/*
+.ipt-search-box i {
+    left:106px;
+}*/
+/*
+*	by jian.dq 20150505 实现table中th不换行问题，以及编辑框定制长度
+*/
+table th {
+	white-space:nowrap;
+};
+input.easyui-datebox{
+	width:48px;
+};
+input.easyui-validatebox{
+	width:105px;
+};
+input.easyui-validatebox{
+	width:48px;
+};

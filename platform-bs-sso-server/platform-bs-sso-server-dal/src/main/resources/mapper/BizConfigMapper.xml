@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wonhigh.bs.sso.dal.database.BizConfigMapper" >
+   <resultMap id="BaseResultMap" type="com.wonhigh.bs.sso.server.common.vo.BizConfigDTO" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="biz_code" property="bizCode" jdbcType="VARCHAR" />	
+    <result column="biz_name" property="bizName" jdbcType="VARCHAR" />
+    <result column="biz_secret" property="bizSecret" jdbcType="VARCHAR" />	
+    <result column="login_url" property="loginUrl" jdbcType="VARCHAR" />
+    <result column="register_url" property="registerUrl" jdbcType="VARCHAR" />	
+    <result column="verify_user_pwd_url" property="verifyUserPwdUrl" jdbcType="VARCHAR" />
+    <result column="del_user_url" property="delUserUrl" jdbcType="VARCHAR" />	
+    <result column="sync_user_info_url" property="syncUserInfoUrl" jdbcType="VARCHAR" />	
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />	
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   
+  <sql id="Base_Column_List" >
+    id,biz_code,biz_name,biz_secret,login_url,register_url,verify_user_pwd_url,del_user_url,sync_user_info_url,email,description,create_time,create_user,update_time,update_user
+  </sql>
+     
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+      	and 
+      	(
+      		biz_name like  CONCAT('%','${params.queryCondition}','%' )
+      		or
+      		biz_code=#{params.queryCondition}
+      	)
+      </if>
+      <if test="null!=params.bizName and ''!=params.bizName" >
+        and biz_name = #{params.bizName,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.bizCode and ''!=params.bizCode" >
+        and biz_code = #{params.bizCode,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.id and ''!=params.id" >
+        and id = #{params.id}
+      </if>
+      
+      <if test="null!=params.diffCode and ''!=params.diffCode" >
+        and biz_code = #{params.diffCode} and id!=#{params.diffId}
+      </if>
+      
+    </if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from biz_config where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM biz_config WHERE 1=1 
+    <include refid="condition" />
+  </select>  
+  
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM biz_config WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderBy != null and ''!=orderBy" >
+        ${orderBy}
+      </if>
+    </if>
+     LIMIT #{page.startRowNum} ,#{page.pageSize} 
+  </select>  
+  
+  <insert id="insertSelective" parameterType="com.wonhigh.bs.sso.server.common.vo.BizConfigDTO">
+		INSERT INTO biz_config(
+			<if test="null!=bizCode and ''!=bizCode" >
+				biz_code,
+			</if>
+			<if test="null!=bizName and ''!=bizName" >
+				biz_name,
+			</if>
+			<if test="null!=bizSecret and ''!=bizSecret" >
+				biz_secret,
+			</if>
+			<if test="null!=loginUrl and ''!=loginUrl" >
+				login_url,
+			</if>
+			<if test="null!=registerUrl and ''!=registerUrl" >
+				register_url,
+			</if>
+			<if test="null!=verifyUserPwdUrl and ''!=verifyUserPwdUrl" >
+				verify_user_pwd_url,
+			</if>
+			<if test="null!=delUserUrl and ''!=delUserUrl" >
+				del_user_url,
+			</if>
+			<if test="null!=syncUserInfoUrl and ''!=syncUserInfoUrl" >
+				sync_user_info_url,
+			</if>
+			<if test="null!=email and ''!=email" >
+				email,
+			</if>
+			<if test="null!=description and ''!=description" >
+				description,
+			</if>
+			create_time,update_time
+		)VALUES(
+			<trim>
+				<if test="null!=bizCode and ''!=bizCode" >
+					#{bizCode},
+				</if>
+				<if test="null!=bizName and ''!=bizName" >
+					#{bizName},
+				</if>
+				<if test="null!=bizSecret and ''!=bizSecret" >
+					#{bizSecret},
+				</if>
+				<if test="null!=loginUrl and ''!=loginUrl" >
+					#{loginUrl},
+				</if>
+				<if test="null!=registerUrl and ''!=registerUrl" >
+					#{registerUrl},
+				</if>
+				<if test="null!=verifyUserPwdUrl and ''!=verifyUserPwdUrl" >
+					#{verifyUserPwdUrl},
+				</if>
+				<if test="null!=delUserUrl and ''!=delUserUrl" >
+					#{delUserUrl},
+				</if>
+				<if test="null!=syncUserInfoUrl and ''!=syncUserInfoUrl" >
+					#{syncUserInfoUrl},
+				</if>
+				<if test="null!=email and ''!=email" >
+					#{email},
+				</if>
+				<if test="null!=description and ''!=description" >
+					#{description},
+				</if>
+				now(),now())
+			</trim>			
+	</insert> 
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.wonhigh.bs.sso.server.common.vo.BizConfigDTO">
+		update biz_config set update_time=now()
+		<trim>
+			<if test="null!=bizCode" >
+				,biz_code=#{bizCode}
+			</if>
+			<if test="null!=bizName" >
+				,biz_name=#{bizName}
+			</if>
+			<if test="null!=bizSecret" >
+				,biz_secret=#{bizSecret}
+			</if>
+			<if test="null!=loginUrl" >
+				,login_url=#{loginUrl}
+			</if>
+			<if test="null!=registerUrl" >
+				,register_url=#{registerUrl}
+			</if>
+			<if test="null!=verifyUserPwdUrl" >
+				,verify_user_pwd_url=#{verifyUserPwdUrl}
+			</if>
+			<if test="null!=delUserUrl" >
+				,del_user_url=#{delUserUrl}
+			</if>
+			<if test="null!=syncUserInfoUrl " >
+				,sync_user_info_url=#{syncUserInfoUrl}
+			</if>
+			<if test="null!=email" >
+				,email=#{email}
+			</if>
+			<if test="null!=description" >
+				,description=#{description}
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.wonhigh.bs.sso.server.common.vo.BizConfigDTO">
+		delete from biz_config where id=#{id}	
+	</delete>
+  	
+  	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT 
+	    <include refid="Base_Column_List" />
+	     FROM biz_config WHERE 1=1 
+	    <include refid="condition" />
+    </select>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+  	SELECT 
+    <include refid="Base_Column_List" />
+     FROM biz_config WHERE 1=1 
+  </select>
+  	
+  <select id="findbyCondition" parameterType="map" resultMap="BaseResultMap">
+  	SELECT 
+    <include refid="Base_Column_List" />
+     FROM biz_config WHERE 1=1 
+    <include refid="condition" />
+  </select>	
+  
+</mapper>

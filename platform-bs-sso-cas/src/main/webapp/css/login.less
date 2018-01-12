@@ -1,0 +1,90 @@
+@import "../common/common.less";
+ 
+body {    
+  background: url(../images/login-bg.jpg); 
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+} 
+.login { 
+  width: 482px;
+  height: 524px;
+}
+.updatePwd {
+  width: 482px;
+  height: 612px;
+}
+// 登录
+.login-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: rgba(0, 0, 0, 0.8);
+  align-items: center; /*垂直居中*/
+  justify-content: center; /*水平居中*/
+  .login-box {
+    width: auto;
+    height: auto;
+    background: #fff;
+  }
+
+  .icon {
+    font-size: 12px;
+  }
+}
+.changePsd,
+.updatePwd {
+  .code {
+    font-size: 12px;
+    line-height: @inputHeight;
+    text-align: center;  
+  } 
+}
+.updatePwd {
+  display: none;
+}
+
+// 导航
+.nav-tabs {
+  width: @inputWidth;
+  border-bottom: 0; 
+  justify-content: space-between;
+  margin-left: 75px;
+  .nav-link {
+    padding: 0.5rem 0;
+    border: transparent;
+    color: #9d9d9d;
+    font-size: 16px;
+    &.active {
+      border-bottom: 4px solid @modaiColor;
+      color: @modaiColor;
+      &:hover {
+        border-bottom: 4px solid @modaiColor;
+      }
+    }
+  }
+}
+// 查看设备信息
+.deviceInfo {
+  width: 400px;
+  height: 100%;
+  display: none;
+  background: #fff;
+  position: absolute;
+  right: -400px;
+  top: 0;
+  padding: 0 15px 15px 15px;
+  border: 1px solid #eee;
+  .deviceTitle {
+    font-size: 16px;
+    padding-top: 15px;
+    line-height: 30px;
+  }
+  .close-icon {
+    top: 5px;
+  }
+}
+
+// 首次登录修改密码
+.loginPsw {
+  display: none;
+}

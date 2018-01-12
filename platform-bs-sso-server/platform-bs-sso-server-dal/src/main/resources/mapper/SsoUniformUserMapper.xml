@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wonhigh.bs.sso.dal.database.SsoUniformUserMapper">
+	<resultMap id="BaseResultMap"
+		type="com.wonhigh.bs.sso.server.common.vo.SsoUniformUserDTO"> 
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="sure_name" property="sureName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="telephone_number" property="telephoneNumber"
+			jdbcType="VARCHAR" />
+		<result column="employee_number" property="employeeNumber"
+			jdbcType="VARCHAR" />
+		<result column="employee_type" property="employeeType" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="biz_user" property="bizUser" jdbcType="VARCHAR" />
+		<result column="organizational_unit_name" property="organizationalUnitName"
+			jdbcType="VARCHAR" />
+		<result column="organization_code" property="organizationCode"
+			jdbcType="VARCHAR" />
+		<result column="unit_id" property="unitId" jdbcType="INTEGER" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="id_card" property="idCard" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		login_name,
+		sure_name,
+		mobile,
+		telephone_number,
+		employee_number,
+		employee_type,
+		email,
+		password,
+		biz_user,
+		organizational_unit_name,
+		organization_code,
+		unit_id,
+		create_user,
+		create_user_id,
+		update_time,
+		update_user,
+		sex,
+		state,
+		del_flag,
+		description,
+		id_card,
+		create_time
+	</sql>
+	
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="null!=params.queryCondition and ''!=params.queryCondition">
+				${params.queryCondition}
+			</if>
+			<if test="null!=params.loginName and ''!=params.loginName">
+				and login_name = #{params.loginName,jdbcType=VARCHAR}
+			</if>
+			<if test="null!=params.id and ''!=params.id">
+				and id = #{params.id}
+			</if>
+			<if test="null!=params.sureName and ''!=params.sureName">
+				and sure_name like CONCAT('%','${params.sureName}','%' )
+			</if>
+			<if test="null!=params.employeeNumber and ''!=params.employeeNumber">
+				and employee_number = #{params.employeeNumber}
+			</if>
+			<if test="null!=params.email and ''!=params.email">
+				and email = #{params.email}
+			</if>
+			<if test="null!=params.mobile and ''!=params.mobile">
+				and mobile = #{params.mobile}
+			</if>
+
+			<if test="null!=params.state ">
+				and state = #{params.state}
+			</if>
+			<if test="null!=params.organizationCode and ''!=params.organizationCode">
+				and organization_code like CONCAT('${params.organizationCode}','%' )
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) as s FROM sso_user WHERE 1=1
+		<include refid="condition" />
+	</select>
+	
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sso_user WHERE 1=1
+		<include refid="condition" />
+	</select>
+	
+	<select id="findByCondition" parameterType="map" resultMap="BaseResultMap">
+	  	SELECT 
+	    <include refid="Base_Column_List" />
+	     FROM sso_user WHERE 1=1 
+	    <include refid="condition" />
+	</select>	
+	
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.wonhigh.bs.sso.server.common.vo.SsoUniformUserDTO">
+		update sso_user set
+		<trim>
+			<if test="null!=loginName and ''!=loginName">
+				login_name=#{loginName},
+			</if>
+			<if test="null!=sureName and ''!=sureName">
+				sure_name=#{sureName},
+			</if>
+			<if test="null!=mobile and ''!=mobile">
+				mobile=#{mobile},
+			</if>
+			<if test="null!=telephoneNumber and ''!=telephoneNumber">
+				telephone_number=#{telephoneNumber},
+			</if>
+			<if test="null!=employeeNumber and ''!=employeeNumber">
+				employee_number=#{employeeNumber},
+			</if>
+			<if test="null!=employeeType and ''!=employeeType">
+				employee_type=#{employeeType},
+			</if>
+			<if test="null!=email">
+				email=#{email},
+			</if>
+			<if test="null!=password and ''!=password">
+				password=#{password},
+			</if>
+			<if test="null!=bizUser and ''!=bizUser">
+				biz_user=#{bizUser},
+			</if>
+			<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+				organizational_unit_name=#{organizationalUnitName},
+			</if>
+			<if test="null!=organizationCode and ''!=organizationCode">
+				organization_code=#{organizationCode},
+			</if>
+			<if test="null!=unitId">
+				unit_id=#{unitId},
+			</if>
+			<if test="null!=createUser and ''!=createUser">
+				create_user=#{createUser},
+			</if>
+			<if test="null!=createUserId">
+				create_user_id=#{createUserId},
+			</if>
+			<if test="null!=sex">
+				sex=#{sex},
+			</if>
+			<if test="null!=state">
+				state=#{state},
+			</if>
+			<if test="null!=delFlag">
+				del_flag=#{delFlag},
+			</if>
+			<if test="null!=description and ''!=description">
+				description=#{description},
+			</if>
+			<if test="null!=idCard and ''!=idCard">
+				id_card=#{idCard},
+			</if>
+			update_time=now()
+		</trim>
+		where id=#{id}
+	</update>
+
+	
+</mapper>

@@ -1,0 +1,400 @@
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+	border: 1px solid #ccc !important;
+}
+
+button:active, .button:active, button:focus, .button:focus, button:hover,
+	.button:hover {
+	outline: none !important;
+}
+
+button:active:hover, .button:active:hover, button:focus:hover, .button:focus:hover,
+	button:hover:hover, .button:hover:hover {
+	cursor: pointer;
+}
+
+body {
+	background: #f5f5f5;
+}
+
+.hoverDefault {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.hoverDefault:hover {
+	cursor: default;
+}
+
+header {
+	height: 105px;
+	background: #03153d;
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid #cdcdcd;
+}
+
+header .navbar {
+	padding: 0 16px;
+	display: flex;
+	width: 100%;
+}
+
+header .log {
+	display: flex;
+	flex-direction: column;
+	padding-left: 8px;
+	color: #fff;
+}
+
+header p {
+	padding: 0;
+}
+
+header .navbar-brand {
+	padding: 0;
+	margin: 0;
+}
+
+header .cnName {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+header .enName {
+	font-size: 16px;
+	font-weight: 400;
+	word-spacing: 3px;
+}
+
+header .nav-list {
+	padding-right: 42px;
+	font-size: 12px;
+	color: #fff;
+	list-style: none;
+}
+
+header .nav-list .nav-list-item {
+	float: left;
+	margin-left: 20px;
+}
+
+header .nav-list .nav-list-item:hover {
+	cursor: pointer;
+}
+
+header .nav-list .iconfont {
+	margin-right: 5px;
+}
+
+main .iconfont {
+	font-size: 30px;
+}
+
+main .menu-list {
+	width: 100%;
+	padding: 0 16px;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+main .menu-item {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	width: 20%;
+	height: 170px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	margin-left: 0;
+	color: #494c6b;
+	list-style: none;
+	font-size: 14px;
+	font-weight: 600;
+	background: #fff;
+	border-right: 4px solid #f5f5f5;
+	border-bottom: 4px solid #f5f5f5;
+}
+
+main .menu-item:nth-child(5n) {
+	border-right: 0;
+}
+
+main .menu-item:hover {
+	cursor: default;
+	background: #fafafa;
+	color: #427fd8;
+	cursor: pointer;
+}
+
+main .menu-item .d-flex {
+	flex-direction: column;
+	align-items: center;
+}
+
+main .menu-item .fa {
+	margin-bottom: 10px;
+}
+
+.modal-dialog {
+	max-width: 484px;
+}
+
+.modal-content {
+	padding: 0 21px;
+	border-radius: 0;
+}
+
+.modal-content .form-control {
+	font-size: 14px;
+}
+
+.modal-content .modal-body {
+	width: 312px;
+	padding: 0;
+	margin: auto;
+}
+
+.modal-content .form-group {
+	margin-bottom: 15px;
+}
+
+.modal-content .form-group-last {
+	margin-bottom: 18px;
+}
+
+.nav-tabs {
+	width: 100%;
+	border-bottom: 0;
+	justify-content: space-between;
+	margin-left: 75px;
+}
+
+.nav-tabs .nav-link {
+	padding: 0.5rem 0;
+	border: transparent;
+	color: #9d9d9d;
+	font-size: 16px;
+}
+
+.nav-tabs .nav-link.active {
+	border-bottom: 4px solid #4b93e5;
+	color: #4b93e5;
+}
+
+.nav-tabs .nav-link.active:hover {
+	border-bottom: 4px solid #4b93e5;
+}
+
+.aBillFrom {
+	width: 303px;
+	margin: auto;
+	margin-bottom: 130px;
+}
+
+.aBillFrom .form-control {
+	width: 100%;
+	height: 40px;
+	padding: 0.3rem 0.5rem;
+	border-radius: 0.1rem;
+}
+
+.aBillFrom .phoneCode.code {
+	width: 40px;
+	color: #000;
+}
+
+.aBillFrom .btn-from {
+	width: 100%;
+	background: #4b93e5;
+}
+
+.aBillFrom .btn-from:hover {
+	opacity: 0.9;
+}
+
+.aBillFrom .tips-list {
+	width: 100%;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-size: 12px;
+	background: #fff;
+	z-index: 20;
+	position: absolute;
+	border: 1px solid #eee;
+	display: none;
+}
+
+.aBillFrom .tips-list-item {
+	padding: 0.3em 0.5em;
+}
+
+.aBillFrom .tips-list-item:hover {
+	cursor: pointer;
+	background: #f5f5f5;
+}
+
+.aBillFrom .codeBox {
+	width: 100%;
+	height: 40px;
+	position: relative;
+}
+
+.aBillFrom .codeInput {
+	width: 190px;
+}
+
+.aBillFrom .code {
+	width: 77px;
+	background: #fff;
+	color: #437acd;
+	height: 38px;
+	position: absolute;
+	right: 1px;
+	top: 1px;
+}
+
+.aBillFrom .code:hover {
+	cursor: pointer;
+}
+
+.aBillFrom .loginCode {
+	width: 105px;
+	border: 1px solid #eee;
+}
+
+.aBillFrom .loginCode:hover {
+	cursor: default;
+}
+
+.aBillFrom .refreshCode {
+	display: block;
+	float: right;
+	border-left: 1px solid #eee;
+	font-size: 12px;
+	line-height: 40px;
+	padding: 0 5px;
+}
+
+.aBillFrom .refreshCode:hover {
+	cursor: pointer;
+}
+
+.aBillFrom .form-bar {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0;
+}
+
+.aBillFrom .form-bar .form-bar-item {
+	color: #4b93e5;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.aBillFrom .form-bar .form-bar-item:hover {
+	cursor: pointer;
+}
+
+.aBillFrom .loginCodeFrom.form-group {
+	margin-bottom: 0;
+}
+
+.aBillFrom .old-enter {
+	position: absolute;
+	bottom: 82px;
+	left: 0;
+	right: 0;
+	font-size: 12px;
+	text-align: center;
+	color: #ababab;
+	text-decoration: underline;
+}
+
+.modal-title {
+	margin-top: 86px;
+	margin-bottom: 40px;
+	text-align: center;
+	font-size: 26px;
+}
+
+#updatePwd .code {
+	font-size: 12px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.error-box {
+	font-size: 12px;
+	padding: 0 0.5rem;
+	color: red;
+}
+
+// bind_css
+
+.modal-input-group{
+	height: 30px;
+    line-height: 30px;
+    margin-bottom: 30px;
+    font-size:12px;
+}
+.modal-input-group label{
+	 width: 100px;
+}
+.modal-input-group .btn{
+	padding: .2rem .25rem;
+}
+
+.modal-input-group .bootstrap-select{
+	    margin-right: 30px;
+}
+.modal-input-group .form-control{
+    width: 145px;
+    margin-right: 10px;
+    height: 25px;
+    margin-top: 7px;
+}
+#btn_bind,#btn_unbind{
+	margin-left: 1em;
+    height: 25px;
+    margin-top: 6px;
+}
+
+#restUserName, #restSelectValue, #restCheckCode, #restNewPwd,
+	#restNewPwdAgain {
+	width: 300px;
+	margin: 10px;
+}
+
+.bootstrap-select {
+	width: 30px;
+	margin: 10px;
+}
+
+.dropdown-toggle {
+	width: 80px;
+	font-size: small;
+	color: black;
+	background: right;
+}
+
+#sendVerfiCode {
+	width: 85px;
+	font-size: 10px;
+}
+
+.bind_biz_title {
+	margin-top: 10px;
+}

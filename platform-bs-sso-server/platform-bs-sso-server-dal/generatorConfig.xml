@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- <properties url="file:///d:/yougouconf/mybatis-ibator-conf.properties"/> -->
+	<classPathEntry location="D:/java/apache-maven-3.2.1/repo/mysql/mysql-connector-java/5.1.43/mysql-connector-java-5.1.43.jar" />
+	<context id="context1" targetRuntime="MyBatis3">
+		
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<!-- 
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.210.64)(PORT = 1521)))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = orcl)))"
+			userId="USR_ZONE_WMS_DEV" password="usr_zone_wms_dev" />
+		 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/sso"
+			userId="root" password="123456" />
+		
+		<javaTypeResolver > 
+        <property name="forceBigDecimals" value="false" /> 
+          <!-- 
+          	number(默认为38位),当长度超过18位时无法强制转换decimal
+                                默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer 
+            true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal 
+        	--> 
+        </javaTypeResolver>
+			
+		<javaModelGenerator targetPackage="com.wonhigh.bs.sso.common.model"
+			targetProject="platform-bs-sso-common" /> 
+		<sqlMapGenerator targetPackage="mapper" targetProject="platform-bs-sso-dal/src/main/resources"/>
+		<javaClientGenerator targetPackage="com.wonhigh.rd.sso.dal.database"
+			targetProject="platform-bs-sso-dal" type="XMLMAPPER">
+			<property name="interfaceExtendSupInterface" value="com.yougou.logistics.base.dal.database.BaseCrudMapper"/>
+			<property name="enableInterfaceSupInterfaceGenericity" value="false"/>
+			<property name="exclusionsMethods" value="countByQuery,deleteByQuery,deleteByPrimaryKey,insert,insertSelective,selectByQuery,selectByQueryWithBLOBs,selectByPrimaryKey,selectCount,selectByPage,updateByQuery,updateByQueryWithBLOBs,updateByPrimaryKeySelective,updateByPrimaryKeyWithBLOBs"/> 
+		</javaClientGenerator>
+			
+	    <sqlMapConfigFileAppend targetPackage="META-INF" targetProject="platform-bs-sso-dal/src/main/resources" confileFileName="mybatis-bs-sso-dal-config.xml" confileFilePackagePath="mapper"/>
+	    
+		<javaServiceGenerator targetPackage="com.wonhigh.bs.sso.service" targetProject="platform-bs-sso-service" 
+		interfaceExtendSupInterface="com.yougou.logistics.base.service.BaseCrudService" enableInterfaceSupInterfaceGenericity="false"
+		extendSupClass="com.yougou.logistics.base.service.BaseCrudServiceImpl" enableSupClassGenericity="false" />
+		
+		<javaManagerGenerator targetPackage="com.wonhigh.bs.sso.manager" targetProject="platform-bs-sso-manager" 
+		interfaceExtendSupInterface="com.yougou.logistics.base.manager.BaseCrudManager" enableInterfaceSupInterfaceGenericity="false"
+		extendSupClass="com.yougou.logistics.base.manager.BaseCrudManagerImpl" enableSupClassGenericity="false" />
+			
+		<javaControllerGenerator targetPackage="com.wonhigh.bs.sso.controller" targetProject="platform-bs-sso-web" 
+		extendSupClass="com.yougou.logistics.base.web.controller.BaseCrudController" enableSupClassGenericity="true" />
+		<!--
+		<table schema="dev1" tableName="logistics_base" domainObjectName="LogisticsBase" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<columnOverride column="BASE_ID" javaType="Long"></columnOverride>
+		</table> 
+		-->
+        
+        <tableSetting isSchema="true" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<prop name="replaceTablePrefix">
+				<list>
+					<prefix name="" value="" />
+				</list>
+			</prop>
+			<!-- 忽略schema，避免在xml中出现schema.表名      -->  
+			<prop name="ignoreGeneratorSchema" value="true"/>
+		</tableSetting>
+        
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,39 @@
+/**
+* Belle blf1
+* Author:wu.h1
+*/
+
+/* reset */
+body,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,button,textarea,select,p,blockquote,th,td{margin:0;padding:0;}
+li{list-style:none;}
+input,button { font-family:"Microsoft Yahei"; }
+a { color:#333; text-decoration:none; }
+a:hover { color:#4A6D68; }
+
+/* global */
+.blf1-body { font:13px/1.2 "Microsoft Yahei", arial,\5b8b\4f53; color:#333; }
+.container { position:absolute; top:50%; left:50%; padding-right: 48px; width:950px; height:460px; margin:-230px 0 0 -475px; background: url(../images/pic_bg.png) no-repeat 20px 234px;}
+.container:before, .container:after { display:table; content:" "; }
+.container:after { clear:both; }
+
+/* nav */
+.blf1-banner { float:left; width:505px; height:405px; background: url(../images/pic_man.png) no-repeat 0px 10px; }
+
+/* login */
+.blf1-login { position:relative; float:right; width:340px; padding-left: 100px; height:360px; border-left: 1px #e5e5e5 solid;}
+.logo { height:50px; margin-bottom:60px; background:url(../images/LOGO.png) no-repeat; text-indent:-999px; overflow:hidden; }
+.form-group { position:relative; margin-top: 30px; color:#fff; font-size:14px; }
+.form-control { width:100%; padding:12px 15px 12px 58px; font-size:14px; background-color:#fff; border:1px solid #e0e0e0; box-sizing:border-box; -webkit-transition: border ease .3s; -ms-transition: border ease .3s; transition: border ease .3s; color:#666; font-family:"Microsoft Yahei"; }
+.form-control:focus { outline:0; border-color:#00a0e9; }
+.username:before, .password:before, .verifyCode:before { position:absolute; left:1px; top:1px; z-index:6; content:""; width:44px; height:44px; border-right:1px solid #e0e0e0; background-image:url(../images/login_icons.png); background-repeat:no-repeat; background-color:#f8fcff; }
+.username:before { background-position:-3px -3px; }
+.password:before { background-position:-3px -55px; }
+.verifyCode:before { background-position:-3px -105px; }
+.verifyCode .form-control { width:210px; }
+.verifyCodeImg { float:right; width:110px; height:46px; cursor:pointer; }
+.btn-login { display: block; width:100%; padding:10px 0; border:1px solid #017ab1; background-color:#00a0e9; color:#fff; font-size:20px; cursor:pointer; }
+.btn-login:hover, .btn-login:active { border-color:#0277AD; background-color:#0096DA ; }
+.error-tip { display:none; position:absolute; top:68px; left:0; color:#E8512B; font-size:14px; font-weight:bold; }
+
+/* copyright */
+.copyright { padding:35px 0 10px; color:#666; text-align:center; clear: both; }

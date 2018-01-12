@@ -1,0 +1,194 @@
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  border: 1px solid #ccc !important;
+}
+button:active,
+.button:active,
+button:focus,
+.button:focus,
+button:hover,
+.button:hover {
+  outline: none !important;
+}
+button:active:hover,
+.button:active:hover,
+button:focus:hover,
+.button:focus:hover,
+button:hover:hover,
+.button:hover:hover {
+  cursor: pointer;
+}
+html {
+  height: 100%;
+}
+body {
+  background: #f5f5f5;
+  height: 100%;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hoverDefault {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.hoverDefault:hover {
+  cursor: default;
+}
+/*******以下为两个页面公用*******************/
+.modal-dialog {
+  max-width: 484px;
+}
+.modal-content {
+  padding: 0 21px;
+  border-radius: 0;
+}
+.modal-content .form-control {
+  font-size: 14px;
+}
+.modal-content .modal-body {
+  width: 312px;
+  padding: 0;
+  margin: auto;
+}
+.modal-content .form-group {
+  margin-bottom: 15px;
+}
+.modal-content .form-group-last {
+  margin-bottom: 18px;
+}
+.aBillFrom {
+  width: 303px;
+  margin: auto;
+  margin-bottom: 130px;
+}
+.aBillFrom .form-control {
+  width: 100%;
+  height: 40px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.1rem;
+  font-size: 14px;
+}
+.aBillFrom .phoneCode.code {
+  width: 40px;
+  color: #000;
+}
+.aBillFrom .btn-from {
+  width: 100%;
+  background: #4b93e5;
+}
+.aBillFrom .btn-from:hover {
+  opacity: 0.9;
+}
+.aBillFrom .tips-list {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 12px;
+  background: #fff;
+  z-index: 20;
+  position: absolute;
+  border: 1px solid #eee;
+  display: none;
+}
+.aBillFrom .tips-list-item {
+  padding: 0.3em 0.5em;
+}
+.aBillFrom .tips-list-item:hover {
+  cursor: pointer;
+  background: #f5f5f5;
+}
+.aBillFrom .codeBox {
+  width: 100%;
+  height: 40px;
+  position: relative;
+}
+.aBillFrom .codeInput {
+  width: 190px;
+}
+.aBillFrom .code {
+  width: 77px;
+  background: #fff;
+  color: #437acd;
+  height: 38px;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+}
+.aBillFrom .code:hover {
+  cursor: pointer;
+}
+.aBillFrom .loginCode {
+  width: 105px;
+  border: 1px solid #eee;
+}
+.aBillFrom .loginCode:hover {
+  cursor: default;
+}
+.aBillFrom .refreshCode {
+  display: block;
+  float: right;
+  border-left: 1px solid #eee;
+  font-size: 12px;
+  line-height: 40px;
+  padding: 0 5px;
+}
+.aBillFrom .refreshCode:hover {
+  cursor: pointer;
+}
+.aBillFrom .form-bar {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.aBillFrom .form-bar .form-bar-item {
+  color: #4b93e5;
+  font-size: 14px;
+  text-decoration: none;
+}
+.aBillFrom .form-bar .form-bar-item:hover {
+  cursor: pointer;
+}
+.aBillFrom .loginCodeFrom.form-group {
+  margin-bottom: 0;
+}
+.aBillFrom .old-enter {
+  position: absolute;
+  bottom: 82px;
+  left: 50%;
+  margin-left: -20px;
+  font-size: 12px;
+  text-align: center;
+  color: #ababab;
+  text-decoration: underline;
+}
+.aBillFrom .old-enter:hover {
+  cursor: pointer;
+  color: #4b93e5;
+}
+.modal-title {
+  margin-top: 86px;
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 26px;
+}
+.close-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  opacity: .8;
+}
+.close-icon:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+/*******两个页面公用end*******************/

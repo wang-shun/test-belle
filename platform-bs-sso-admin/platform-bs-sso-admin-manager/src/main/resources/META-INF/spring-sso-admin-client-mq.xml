@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+          http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+          
+	<bean id="jmsConnectionFatory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop" init-method="start">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="${activemq.host}?initialReconnectDelay=30000" />
+				<property name="sendTimeout" value="10000" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- <bean id="driverJmsDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="com.yougou.logistics.tms.data.driver.queue" />
+    </bean>
+    
+    <bean id="diverListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">	
+		<property name="clientId" value="${activemq.listener.clientId}" />   
+        <property name="concurrentConsumers" value="${activemq.listener.concurrentConsumers}"/>
+		<property name="connectionFactory" ref="jmsConnectionFatory" />
+		<property name="destination" ref="driverJmsDestination" />
+		<property name="messageListener" ref="driverMessageReceiver" />
+	</bean> -->
+	
+	<!-- 消费方使用配置 -->
+	<bean id="jmsDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${activemq.sso.topic}" />
+	</bean>
+	
+	<bean id="listenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<!--<property name="transactionManager" ref="transManager" />-->
+		<!-- 发布/订阅模式 打开如下配置 -->
+		<property name="pubSubDomain" value="true"/>
+		<!-- 如果是持久化订阅时,请同时打开如下两个选项,并且clientId做到对同一TOPIC唯一-->
+		<property name="subscriptionDurable" value="true"/>
+		<property name="clientId" value="${activemq.listener.clientId}" />
+		<property name="durableSubscriptionName" value="${activemq.listener.durableSubName}" />
+
+        <property name="concurrentConsumers" value="${activemq.listener.concurrentConsumers}"/>
+		<property name="connectionFactory" ref="jmsConnectionFatory" />
+		<property name="destination" ref="jmsDestination" />
+		<property name="messageListener" ref="topicMessageReceiver" />
+		<!--  <property name="taskExecutor" ref="jmsThreadPoolExecutor"/>-->
+	</bean>
+</beans>

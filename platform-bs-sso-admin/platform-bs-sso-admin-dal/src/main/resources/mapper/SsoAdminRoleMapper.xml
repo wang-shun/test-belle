@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wonhigh.bs.admin.sso.dal.database.SsoAdminRoleMapper" >
+   <resultMap id="BaseResultMap" type="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleDTO" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />	
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />	
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+    
+  <resultMap id="BaseResultMap2" type="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleDTO" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />	
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />	
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	<collection property="orgUnitList" column="id" javaType="ArrayList" 
+                select="com.wonhigh.bs.admin.sso.dal.database.OrgUnitMapper.selectByRoleId"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+	id,role_name,role_code,description,create_time,create_user,update_time,update_user,create_user_id
+  </sql>
+     
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.roleName and ''!=params.roleName" >
+        and role_name like CONCAT('%',#{params.roleName,jdbcType=VARCHAR},'%')  
+      </if>
+      <if test="null!=params.description and ''!=params.description" >
+        and description like CONCAT('%',#{params.description,jdbcType=VARCHAR},'%')  
+      </if>
+      <if test="null!=params.createUserId" >
+        and create_user_id = #{params.createUserId,jdbcType=INTEGER}  
+      </if>
+    </if>
+  </sql>
+  
+  	
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="map">
+    SELECT COUNT(1) as s FROM sso_admin_role WHERE 1=1 
+    <include refid="condition" />
+  </select>  
+  
+  <select id="selectByPage" resultMap="BaseResultMap2" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM sso_admin_role WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderBy != null and ''!=orderBy" >
+        ${orderBy}
+      </if>
+    </if>
+     LIMIT #{page.startRowNum} ,#{page.pageSize} 
+  </select>   
+  
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from sso_admin_role where id = #{id,jdbcType=INTEGER}
+  </select>
+  	
+  <select id="findAll" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM sso_admin_role
+  </select>  
+  
+  <insert id="insertSelective" parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sso_admin_role(
+			<if test="null!=roleName and ''!=roleName" >
+				role_name,
+			</if>
+			<if test="null!=roleCode and ''!=roleCode" >
+				role_code,
+			</if>
+			<if test="null!=description and ''!=description" >
+				description,
+			</if>
+			<if test="null!=createUserId and ''!=createUserId" >
+				create_user_id,
+			</if>
+			<if test="null!=createUser and ''!=createUser" >
+				create_user,
+			</if>
+			create_time,update_time
+		)VALUES(
+			<trim>
+				<if test="null!=roleName and ''!=roleName" >
+					#{roleName,jdbcType=VARCHAR},
+				</if>
+				<if test="null!=roleCode and ''!=roleCode" >
+					#{roleCode,jdbcType=VARCHAR},
+				</if>
+				<if test="null!=description and ''!=description" >
+					#{description,jdbcType=VARCHAR},
+				</if>
+				<if test="null!=createUserId and ''!=createUserId" >
+					#{createUserId,jdbcType=INTEGER},
+				</if>
+				<if test="null!=createUser and ''!=createUser" >
+					#{createUser,jdbcType=VARCHAR},
+				</if>
+				now(),now())
+			</trim>			
+	</insert> 
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleDTO">
+		update sso_admin_role set update_time=now()
+		<trim>
+			<if test="null!=roleName and ''!=roleName" >
+				,role_name=#{roleName,jdbcType=VARCHAR}
+			</if>
+			<if test="null!=roleCode and ''!=roleCode" >
+				,role_code=#{roleCode,jdbcType=VARCHAR}
+			</if>
+			<if test="null!=description and ''!=description" >
+				,description=#{description,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteByPrimarayKeyForModel" parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoAdminRoleDTO">
+		delete from sso_admin_role where id=#{id}	
+	</delete>
+	
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+	    SELECT 
+	    <include refid="Base_Column_List" />
+	     FROM sso_admin_role WHERE 1=1 
+	    <include refid="condition" />
+    </select>
+	
+</mapper>

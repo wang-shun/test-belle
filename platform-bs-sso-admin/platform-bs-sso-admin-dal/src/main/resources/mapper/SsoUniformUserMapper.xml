@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wonhigh.bs.admin.sso.dal.database.SsoUniformUserMapper">
+	<resultMap id="BaseResultMap"
+		type="com.wonhigh.bs.sso.admin.common.vo.SsoUniformUserDTO">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="sure_name" property="sureName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="telephone_number" property="telephoneNumber"
+			jdbcType="VARCHAR" />
+		<result column="employee_number" property="employeeNumber"
+			jdbcType="VARCHAR" />
+		<result column="employee_type" property="employeeType" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="biz_user" property="bizUser" jdbcType="VARCHAR" />
+		<result column="organizational_unit_name" property="organizationalUnitName"
+			jdbcType="VARCHAR" />
+		<result column="organization_code" property="organizationCode"
+			jdbcType="VARCHAR" />
+		<result column="unit_id" property="unitId" jdbcType="INTEGER" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="id_card" property="idCard" jdbcType="VARCHAR" />
+		<result column="position_name" property="positionName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+        id,
+        login_name,
+        sure_name,
+        mobile,
+        telephone_number,
+        employee_number,
+        employee_type,
+        email,
+        password,
+        biz_user,
+        organizational_unit_name,
+        organization_code,
+        unit_id,
+        create_user,
+        create_user_id,
+        update_time,
+        update_user,
+        sex,
+        state,
+        del_flag,
+        description,
+        id_card,
+        position_name,
+        create_time
+    </sql>
+	
+	<sql id="Base_Column_List2">
+        sso_user.id,
+        sso_user.login_name,
+        sso_user.sure_name,
+        sso_user.mobile,
+        sso_user.telephone_number,
+        sso_user.employee_number,
+        sso_user.employee_type,
+        sso_user.email,
+        sso_user.`password`,
+        sso_user.biz_user,
+        sso_user.create_user,
+        sso_user.create_user_id,
+        sso_user.update_time,
+        sso_user.update_user,
+        sso_user.sex,
+        sso_user.state,
+        sso_user.del_flag,
+        sso_user.description,
+        sso_user.id_card,
+        sso_user.position_name,
+        sso_user.create_time,
+        sso_user.unit_id,
+        org_unit.full_name AS organizational_unit_name,
+        org_unit.unit_code AS organization_code
+    </sql>
+
+	<sql id="condition">
+        <if test="null!=params">
+            <if test="null!=params.queryCondition and ''!=params.queryCondition">
+                ${params.queryCondition}
+            </if>
+            <if test="null!=params.loginName and ''!=params.loginName">
+                and sso_user.login_name = #{params.loginName,jdbcType=VARCHAR}
+            </if>
+            <if test="null!=params.id and ''!=params.id">
+                and sso_user.id = #{params.id}
+            </if>
+            <if test="null!=params.sureName and ''!=params.sureName">
+                and sso_user.sure_name like CONCAT('%','${params.sureName}','%' )
+            </if>
+            <if test="null!=params.employeeNumber and ''!=params.employeeNumber">
+                and sso_user.employee_number = #{params.employeeNumber}
+            </if>
+            <if test="null!=params.email and ''!=params.email">
+                and sso_user.email = #{params.email}
+            </if>
+            <if test="null!=params.mobile and ''!=params.mobile">
+                and sso_user.mobile = #{params.mobile}
+            </if>
+            <if test="null!=params.state ">
+                and sso_user.state = #{params.state}
+            </if>
+            <if test="null!=params.idCard and ''!=params.idCard">
+                and sso_user.id_card = #{params.idCard}
+            </if>
+            <if test="null!=params.organizationCode and ''!=params.organizationCode">
+                and org_unit.unit_code like CONCAT('${params.organizationCode}','%' )
+            </if>
+            <if test="null!=params.startTime and ''!=params.startTime">
+                and sso_user.update_time >= #{params.startTime} 
+            </if>
+            <if test="null!=params.endTime and ''!=params.endTime">
+            	and sso_user.update_time <![CDATA[ <= ]]> #{params.endTime} 
+            </if>
+         </if>
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sso_user where id = #{id,jdbcType=INTEGER} 
+	</select>
+
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) as s FROM sso_user LEFT JOIN org_unit ON sso_user.unit_id = org_unit.unit_id WHERE 1=1
+		<include refid="condition" />
+	</select>
+
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List2" />
+		FROM sso_user LEFT JOIN org_unit ON sso_user.unit_id = org_unit.unit_id WHERE 1=1
+		<include refid="condition" />
+		<if test="orderByField != null and ''!=orderByField">
+			ORDER BY ${orderByField}
+			<if test="orderBy != null and ''!=orderBy">
+				${orderBy}
+			</if>
+		</if>
+		LIMIT #{page.startRowNum} ,#{page.pageSize}
+	</select>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List2" />
+        FROM sso_user LEFT JOIN org_unit ON sso_user.unit_id = org_unit.unit_id WHERE 1=1
+        <include refid="condition" />
+    </select>
+    
+	<insert id="insertSelective"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoUniformUserDTO">
+		INSERT INTO sso_user(
+		<if test="null!=loginName and ''!=loginName">
+			login_name,
+		</if>
+		<if test="null!=sureName and ''!=sureName">
+			sure_name,
+		</if>
+		<if test="null!=mobile and ''!=mobile">
+			mobile,
+		</if>
+		<if test="null!=telephoneNumber and ''!=telephoneNumber">
+			telephone_number,
+		</if>
+		<if test="null!=employeeNumber and ''!=employeeNumber">
+			employee_number,
+		</if>
+		<if test="null!=employeeType and ''!=employeeType">
+			employee_type,
+		</if>
+		<if test="null!=email and ''!=email">
+			email,
+		</if>
+		<if test="null!=password and ''!=password">
+			password,
+		</if>
+		<if test="null!=bizUser and ''!=bizUser">
+			biz_user,
+		</if>
+		<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+			organizational_unit_name,
+		</if>
+		<if test="null!=organizationCode and ''!=organizationCode">
+			organization_code,
+		</if>
+		<if test="null!=unitId">
+			unit_id,
+		</if>
+		<if test="null!=createUser and ''!=createUser">
+			create_user,
+		</if>
+		<if test="null!=createUserId">
+			create_user_id,
+		</if>
+		<if test="null!=sex">
+			sex,
+		</if>
+		<if test="null!=state">
+			state,
+		</if>
+		<if test="null!=delFlag">
+			del_flag,
+		</if>
+		<if test="null!=description and ''!=description">
+			description,
+		</if>
+		<if test="null!=idCard and ''!=idCard">
+			id_card,
+		</if>
+			position_name,
+		create_time,update_time
+		)VALUES(
+		<trim>
+			<if test="null!=loginName and ''!=loginName">
+				#{loginName},
+			</if>
+			<if test="null!=sureName and ''!=sureName">
+				#{sureName},
+			</if>
+			<if test="null!=mobile and ''!=mobile">
+				#{mobile},
+			</if>
+			<if test="null!=telephoneNumber and ''!=telephoneNumber">
+				#{telephoneNumber},
+			</if>
+			<if test="null!=employeeNumber and ''!=employeeNumber">
+				#{employeeNumber},
+			</if>
+			<if test="null!=employeeType and ''!=employeeType">
+				#{employeeType},
+			</if>
+			<if test="null!=email and ''!=email">
+				#{email},
+			</if>
+			<if test="null!=password and ''!=password">
+				#{password},
+			</if>
+			<if test="null!=bizUser and ''!=bizUser">
+				#{bizUser},
+			</if>
+			<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+				#{organizationalUnitName},
+			</if>
+			<if test="null!=organizationCode and ''!=organizationCode">
+				#{organizationCode},
+			</if>
+			<if test="null!=unitId">
+				#{unitId},
+			</if>
+			<if test="null!=createUser and ''!=createUser">
+				#{createUser},
+			</if>
+			<if test="null!=createUserId">
+				#{createUserId},
+			</if>
+			<if test="null!=sex">
+				#{sex},
+			</if>
+			<if test="null!=state">
+				#{state},
+			</if>
+			<if test="null!=delFlag">
+				#{delFlag},
+			</if>
+			<if test="null!=description and ''!=description">
+				#{description},
+			</if>
+			<if test="null!=idCard and ''!=idCard">
+				#{idCard},
+			</if>
+	            #{positionName},
+			now(),now())
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoUniformUserDTO">
+		update sso_user set
+		<trim>
+			<if test="null!=loginName and ''!=loginName">
+				login_name=#{loginName},
+			</if>
+			<if test="null!=sureName and ''!=sureName">
+				sure_name=#{sureName},
+			</if>
+			<if test="null!=mobile and ''!=mobile">
+				mobile=#{mobile},
+			</if>
+			<if test="''==mobile">
+				mobile=NULL,
+			</if>
+			<if test="null!=telephoneNumber">
+				telephone_number=#{telephoneNumber},
+			</if>
+			<if test="null!=employeeNumber and ''!=employeeNumber">
+				employee_number=#{employeeNumber},
+			</if>
+			<if test="null!=employeeType and ''!=employeeType">
+				employee_type=#{employeeType},
+			</if>
+			<if test="null!=email and ''!=email">
+				email=#{email},
+			</if>
+			<if test="''==email">
+				email=null,
+			</if>
+			<if test="null!=password and ''!=password">
+				password=#{password},
+			</if>
+			<if test="null!=bizUser and ''!=bizUser">
+				biz_user=#{bizUser},
+			</if>
+			<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+				organizational_unit_name=#{organizationalUnitName},
+			</if>
+			<if test="null!=organizationCode and ''!=organizationCode">
+				organization_code=#{organizationCode},
+			</if>
+			<if test="null!=unitId">
+				unit_id=#{unitId},
+			</if>
+			<if test="null!=createUser and ''!=createUser">
+				create_user=#{createUser},
+			</if>
+			<if test="null!=createUserId">
+				create_user_id=#{createUserId},
+			</if>
+			<if test="null!=sex">
+				sex=#{sex},
+			</if>
+			<if test="null!=state">
+				state=#{state},
+			</if>
+			<if test="null!=delFlag">
+				del_flag=#{delFlag},
+			</if>
+			<if test="null!=description and ''!=description">
+				description=#{description},
+			</if>
+			<if test="null!=idCard and ''!=idCard">
+				id_card=#{idCard},
+			</if>
+				position_name=#{positionName},
+			update_time=now()
+		</trim>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteByPrimarayKeyForModel"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoUniformUserDTO">
+		delete from sso_user where id=#{id}
+		<!-- update sso_user set del_flag = 1 where id=#{id} -->
+	</delete>
+
+	<insert id="saveAsDeleted"
+		parameterType="com.wonhigh.bs.sso.admin.common.vo.SsoUniformUserDTO">
+		INSERT INTO sso_user_deleted(
+		<if test="null!=loginName and ''!=loginName">
+			login_name,
+		</if>
+		<if test="null!=sureName and ''!=sureName">
+			sure_name,
+		</if>
+		<if test="null!=mobile and ''!=mobile">
+			mobile,
+		</if>
+		<if test="null!=telephoneNumber and ''!=telephoneNumber">
+			telephone_number,
+		</if>
+		<if test="null!=employeeNumber and ''!=employeeNumber">
+			employee_number,
+		</if>
+		<if test="null!=employeeType and ''!=employeeType">
+			employee_type,
+		</if>
+		<if test="null!=email and ''!=email">
+			email,
+		</if>
+		<if test="null!=password and ''!=password">
+			password,
+		</if>
+		<if test="null!=bizUser and ''!=bizUser">
+			biz_user,
+		</if>
+		<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+			organizational_unit_name,
+		</if>
+		<if test="null!=organizationCode and ''!=organizationCode">
+			organization_code,
+		</if>
+		<if test="null!=unitId">
+			unit_id,
+		</if>
+		<if test="null!=createUser and ''!=createUser">
+			create_user,
+		</if>
+		<if test="null!=createUserId">
+			create_user_id,
+		</if>
+		<if test="null!=sex">
+			sex,
+		</if>
+		<if test="null!=state">
+			state,
+		</if>
+		<if test="null!=delFlag">
+			del_flag,
+		</if>
+		<if test="null!=description and ''!=description">
+			description,
+		</if>
+		<if test="null!=idCard and ''!=idCard">
+			id_card,
+		</if>
+		create_time,update_time
+		)VALUES(
+		<trim>
+			<if test="null!=loginName and ''!=loginName">
+				#{loginName},
+			</if>
+			<if test="null!=sureName and ''!=sureName">
+				#{sureName},
+			</if>
+			<if test="null!=mobile and ''!=mobile">
+				#{mobile},
+			</if>
+			<if test="null!=telephoneNumber and ''!=telephoneNumber">
+				#{telephoneNumber},
+			</if>
+			<if test="null!=employeeNumber and ''!=employeeNumber">
+				#{employeeNumber},
+			</if>
+			<if test="null!=employeeType and ''!=employeeType">
+				#{employeeType},
+			</if>
+			<if test="null!=email and ''!=email">
+				#{email},
+			</if>
+			<if test="null!=password and ''!=password">
+				#{password},
+			</if>
+			<if test="null!=bizUser and ''!=bizUser">
+				#{bizUser},
+			</if>
+			<if test="null!=organizationalUnitName and ''!=organizationalUnitName">
+				#{organizationalUnitName},
+			</if>
+			<if test="null!=organizationCode and ''!=organizationCode">
+				#{organizationCode},
+			</if>
+			<if test="null!=unitId">
+				#{unitId},
+			</if>
+			<if test="null!=createUser and ''!=createUser">
+				#{createUser},
+			</if>
+			<if test="null!=createUserId">
+				#{createUserId},
+			</if>
+			<if test="null!=sex">
+				#{sex},
+			</if>
+			<if test="null!=state">
+				#{state},
+			</if>
+			<if test="null!=delFlag">
+				#{delFlag},
+			</if>
+			<if test="null!=description and ''!=description">
+				#{description},
+			</if>
+			<if test="null!=idCard and ''!=idCard">
+				#{idCard},
+			</if>
+			now(),now())
+		</trim>
+	</insert>
+
+</mapper>

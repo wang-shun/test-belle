@@ -1,0 +1,199 @@
+[
+  {
+    "parentId": 1,
+    "menuLevel": 2,
+    "state": "open",
+    "systemId": 111,
+    "systemName": null,
+    "childrenCount": 0,
+    "menuCode": null,
+    "attributes": {},
+    "id": 111,
+    "text": "邮件短信管理系统",
+    "remark": null,
+    "order": 1,
+    "isLeaf": "false",
+    "children": [
+      {
+        "parentId": 111,
+        "menuLevel": null,
+        "state": "open",
+        "systemId": 111,
+        "systemName": "邮件短信管理系统",
+        "childrenCount": 0,
+        "menuCode": "1",
+        "attributes": {},
+        "id": 54999,
+        "text": "系统管理",
+        "remark": "",
+        "order": 1,
+        "isLeaf": "true",
+        "children": [
+          
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "to_bind_sso"
+            },
+            "id": 2618,
+            "text": "绑定一账通",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "to_detail"
+            },
+            "id": 2616,
+            "text": "邮件明细查询",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "to_smsdetail"
+            },
+            "id": 2618,
+            "text": "短信明细查询",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "statistics/"
+            },
+            "id": 2619,
+            "text": "统计信息",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "test/send"
+            },
+            "id": 2620,
+            "text": "功能测试",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "sms/balance"
+            },
+            "id": 2622,
+            "text": "余额查询",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "biz/type"
+            },
+            "id": 2632,
+            "text": "业务类型",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "sms/delivered"
+            },
+            "id": 2642,
+            "text": "上行短信",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          },
+          {
+            "parentId": null,
+            "menuLevel": null,
+            "state": "open",
+            "systemId": null,
+            "systemName": null,
+            "childrenCount": 0,
+            "menuCode": null,
+            "attributes": {
+              "url": "cmd/action"
+            },
+            "id": 2652,
+            "text": "短信指令",
+            "remark": null,
+            "order": null,
+            "isLeaf": null,
+            "children": null
+          }
+        ]
+      }
+    ]
+  }
+]

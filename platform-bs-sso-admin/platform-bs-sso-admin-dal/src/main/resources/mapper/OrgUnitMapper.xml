@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wonhigh.bs.admin.sso.dal.database.OrgUnitMapper" >
+   <resultMap id="BaseResultMapAll" type="com.wonhigh.bs.sso.admin.common.vo.OrgUnitDTO" >
+    <result column="unit_Id" property="unitId" jdbcType="INTEGER" />
+    <result column="unit_code" property="unitCode" jdbcType="VARCHAR" />	
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="delflag" property="delflag" jdbcType="VARCHAR" />
+    <result column="org_Status" property="orgStatus" jdbcType="INTEGER" />
+    <result column="unit_Level_id" property="unitLevelId" jdbcType="INTEGER" />
+    <result column="unit_level_name" property="unitLevelName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+    <result column="effective_time" property="effectiveTime" jdbcType="DATE" />
+    <result column="end_time" property="endTime" jdbcType="DATE" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="child_code_count" property="childNodeCount" jdbcType="INTEGER" />
+  </resultMap>
+   
+   <resultMap id="BaseResultMap" type="com.wonhigh.bs.sso.admin.common.model.OrgUnit" >
+    <result column="Unit_Id" property="unitId" jdbcType="INTEGER" />
+    <result column="Unit_code" property="unitCode" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="delflag" property="delflag" jdbcType="VARCHAR" />
+    <result column="org_Status" property="orgStatus" jdbcType="INTEGER" />
+    <result column="Unit_Level_id" property="unitLevelId" jdbcType="INTEGER" />
+    <result column="Unit_Level_name" property="unitLevelName" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="Full_Name" property="fullName" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime"  jdbcType="TIMESTAMP" />
+  </resultMap>
+    
+  <sql id="condition22" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.companyNo and ''!=params.companyNo" >
+        and pro.company_no = #{params.companyNo,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.unitId and ''!=params.unitId" >
+        and unit.unit_Id = #{params.unitId,jdbcType=INTEGER}
+      </if>
+      <if test="null!=params.unitIds and ''!=params.unitIds" >
+        and unit.unit_Id in 
+         <foreach item="item" index="index" collection="params.unitIds" open="(" separator="," close=")">  
+		  	#{item}  
+	 	</foreach>  
+      </if>
+      <if test="null!=params.unitCode and ''!=params.unitCode" >
+        and unit.unit_code = #{params.unitCode,jdbcType=VARCHAR}
+      </if>
+       <if test="(null!= params.orgStatus and ''!=params.orgStatus) or params.orgStatus == 0" >
+        and unit.org_status = #{params.orgStatus,jdbcType=INTEGER}
+      </if>
+      <if test="(null!= params.parentId and ''!=params.parentId) or params.parentId == 0" >
+        and unit.parent_id = #{params.parentId,jdbcType=INTEGER}
+      </if>
+       
+       <if test="null!=params.positionId and ''!=params.positionId" >
+       	 and EXISTS  (SELECT 1 FROM org_position posit WHERE posit.`unit_id` = unit.`unit_id` AND posit.`delflag` = 0    AND posit.position_id = #{params.positionId,jdbcType=INTEGER})
+      	</if>
+   	 	<if test="null!=params.employeeName and ''!=params.employeeName" >
+       	and EXISTS  (SELECT 1 FROM employee emp WHERE emp.`unit_id` = unit.`unit_id` AND emp.`delflag` = 0  AND emp.`employee_status` IN(0,1,2,3,4) AND emp.employee_name like CONCAT('%',#{params.employeeName,jdbcType=VARCHAR},'%') )
+      	</if>
+      <if test="null != params.name and '' != params.name" >
+        AND (unit.full_name = #{params.name,jdbcType=VARCHAR} or unit.name = #{params.name,jdbcType=VARCHAR})
+      </if> 
+      <if test="null!=params.effectiveTime and ''!=params.effectiveTime" >
+        and unit.effective_time &gt;= #{params.effectiveTime,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.endTime and ''!=params.endTime" >
+        and unit.end_time &lt;= #{params.endTime,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.unitSearchName and ''!=params.unitSearchName" >
+      
+			AND (unit.full_name LIKE CONCAT('%',#{params.unitSearchName},'%') 
+      			OR 
+      		unit.name LIKE CONCAT('%',#{params.unitSearchName},'%'))
+      </if>
+      <if test="null!=params.shopNo and ''!=params.shopNo" >
+        and shop.shop_no = #{params.shopNo,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.fuzzyUnitName and ''!=params.fuzzyUnitName" >
+        and unit.full_name like CONCAT('%',#{params.fuzzyUnitName},'%') 
+      </if>
+      <if test="null!=params.zoneNo and ''!=params.zoneNo" >
+        and pro.zone_no = #{params.zoneNo,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="null!=params.shopNos and ''!=params.shopNos">
+                and shop.shop_no  in
+                <foreach item="item" index="index" collection="params.shopNos"
+                    open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+      </if>
+      
+      
+    </if>
+    
+    <if test="null!=params.selfUnitId and ''!=params.selfUnitId" >
+      and unit.parent_id = #{params.selfUnitId,jdbcType=INTEGER} or unit.unit_id = #{params.selfUnitId,jdbcType=INTEGER}
+    </if>
+  </sql>
+  
+  <select id="findByParams" resultMap="BaseResultMapAll" parameterType="map" >
+  
+  SELECT t1.*, t2.count as child_code_count FROM
+  (
+	     SELECT unit_id,unit_code,unit_level_name,unit_level_id,parent_id,
+			name,en_name,full_name,org_status,
+			sort,effective_time,end_time
+		FROM org_unit unit 
+	  	where 1=1 and unit.delflag = 0   
+	    <include refid="condition22" />
+	    order by unit.sort asc,unit.unit_code asc
+	) AS t1 LEFT JOIN (
+		SELECT parent_id, COUNT(*) as count FROM org_unit GROUP BY parent_id
+	) t2 on t1.unit_id = t2.parent_id
+  </select> 
+  
+  <select id="findByKey" resultMap="BaseResultMapAll" parameterType="java.lang.Integer">
+    SELECT unit_id,unit_code,unit_level_name,unit_level_id,parent_id,
+		name,en_name,full_name,org_status,
+		sort,effective_time,end_time
+    from org_unit unit
+    WHERE unit.unit_id = ${unitId} and unit.delflag = 0
+  </select>
+  	
+  <select id="selectByUnitCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT unit.* 
+  	FROM org_unit unit 
+		WHERE 1=1 
+		AND unit.delflag=0 
+		AND unit.org_status=1
+		AND unit.`unit_code`= #{unitCode,jdbcType=VARCHAR};
+  </select>
+  
+  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	SELECT * FROM org_unit o LEFT JOIN sso_admin_role_org_unit ou on o.unit_id = ou.org_unit_id
+	WHERE ou.sso_admin_role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryParentsUnit" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	SELECT parent_id FROM org_unit WHERE unit_Id = #{unitId}
+  </select>
+  
+</mapper>

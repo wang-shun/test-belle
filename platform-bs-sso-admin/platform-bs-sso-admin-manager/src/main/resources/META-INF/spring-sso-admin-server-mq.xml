@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="jmsConnectionFatory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop" init-method="start">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL"
+					value="${activemq.host}" />
+				<property name="sendTimeout" value="10000" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 目标名称 -->
+	<bean id="jmsDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="VirtualTopic.com.retail.hrms.topic" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<!-- lets wrap in a pool to avoid creating a connection per send -->
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFatory" />
+			</bean>
+		</property>
+		<property name="defaultDestination" ref="jmsDestination" />
+		<!-- custom MessageConverter -->
+		<property name="messageConverter">
+			<null />
+		</property>
+	</bean>
+
+</beans>
